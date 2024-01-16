@@ -22,8 +22,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}    # Gere um token no Sonarcloud.io, adicione-o às secrets deste repositório com o nome SONAR_TOKEN (Configurações > Secrets > Actions > adicionar nova secret do repositório)
         with:
           args:
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
+            -Dsonar.projectKey=rafaeldemiranda95_TechChallenge-Producao
+            -Dsonar.organization=rafaeldemiranda95
             # Caminhos separados por vírgulas para diretórios contendo arquivos-fonte principais.
             #-Dsonar.sources= # opcional, o padrão é o diretório base do projeto
             # Quando a análise precisa ocorrer em um diretório diferente daquele de onde foi iniciada
