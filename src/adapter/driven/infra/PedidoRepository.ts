@@ -10,7 +10,7 @@ export class PedidoRepository implements IPedidoUseCase {
       // let listaFila = await prisma.fila.findMany();
       return listaFila;
     } catch (error: any) {
-      console.log('error', error);
+      throw error;
     }
   }
   async trocarStatusFila(id: number, status: string): Promise<void> {
@@ -19,19 +19,18 @@ export class PedidoRepository implements IPedidoUseCase {
     // pronto
     // finalizado
 
-    console.log('Troca Status Fila');
     try {
       let filaQuery = `UPDATE public.fila SET status = '${status}' WHERE id = ${id} RETURNING *`;
       let _fila = await runQuery(filaQuery);
-      console.log('_fila  ==>>  ', _fila);
+      // console.log('_fila  ==>>  ', _fila);
       if (_fila.length > 0) {
         let fila = _fila[0];
         let pedidoQuery = `UPDATE public.pedido SET status = '${status}' WHERE id = ${fila.id} RETURNING *`;
         let pedido = await runQuery(pedidoQuery);
-        console.log('pedido  ==>>  ', pedido);
+        // console.log('pedido  ==>>  ', pedido);
       }
     } catch (error: any) {
-      console.log('error', error);
+      throw error;
     }
   }
   async enviarParaFila(pedido: Pedido): Promise<void> {
@@ -41,7 +40,7 @@ export class PedidoRepository implements IPedidoUseCase {
       }, ${pedido.status}, ${pedido.usuario.id})`;
       await runQuery(query);
     } catch (error: any) {
-      console.log('error', error);
+      throw error;
     }
   }
   async listarPorStatus(status: string[]): Promise<any> {
@@ -58,7 +57,7 @@ export class PedidoRepository implements IPedidoUseCase {
       // });
       return listaPedidos;
     } catch (error: any) {
-      console.log('error', error);
+      throw error;
     }
   }
   async listar() {
@@ -69,7 +68,7 @@ export class PedidoRepository implements IPedidoUseCase {
       let pedidoProduto = await runQuery(query2);
       let pedidosObj: ListagemPedidos[] = [];
       let pedidosL = [...pedidos];
-      console.log('pedidosL  ==>  ', pedidosL);
+      // console.log('pedidosL  ==>  ', pedidosL);
       for (let item of pedidosL) {
         if (item.status !== 'Finalizado') {
           let produtos: Array<any> = [];
@@ -100,9 +99,11 @@ export class PedidoRepository implements IPedidoUseCase {
         (el) => el.status.toUpperCase() == 'EM PREPARAÇÃO'
       );
       let returnPedidosObj = pronto.concat(emPreparação, recebido);
-      console.log('returnPedidosObj  ==>  ', returnPedidosObj);
+      // console.log('returnPedidosObj  ==>  ', returnPedidosObj);
       return returnPedidosObj;
       // return pedidosObj;
-    } catch (error: any) {}
+    } catch (error: any) {
+      throw error;
+    }
   }
 }

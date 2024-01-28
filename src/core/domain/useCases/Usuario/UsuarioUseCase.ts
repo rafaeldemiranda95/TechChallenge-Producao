@@ -2,40 +2,48 @@ import { UsuarioRepository } from '../../../../adapter/driven/infra/UsuarioRepos
 import { Usuario } from '../../../domain/models/Usuario';
 
 export class UsuarioUseCase {
+  private usuarioRepository: UsuarioRepository;
+
+  constructor(usuarioRepository: UsuarioRepository) {
+    this.usuarioRepository = usuarioRepository;
+  }
+
+  // Manter
   async autenticaAdministrador(usuario: Usuario, res: any) {
     try {
-      let verificaUsuario =
-        await new UsuarioRepository().autenticaAdministrador(usuario);
-      if (verificaUsuario == undefined) {
-        res.status(400).send('Usuário não encontrado');
+      const usuarioAutenticado =
+        await this.usuarioRepository.autenticaAdministrador(usuario);
+      if (usuarioAutenticado) {
+        res.status(200).send('Usuário Autenticado');
       } else {
-        res.status(200).send(verificaUsuario);
+        throw new Error('Usuário não encontrado');
       }
-    } catch (error: any) {
-      console.log(error);
+    } catch (error) {
+      // Aqui você pode tratar os erros conforme necessário
+      throw error;
     }
   }
   async autenticaCliente(usuario: Usuario, res: any) {
     try {
-      let verificaUsuario = await new UsuarioRepository().autenticaCliente(
+      const verificaUsuario = await this.usuarioRepository.autenticaCliente(
         usuario
       );
-      if (verificaUsuario == undefined) {
-        res.status(400).send('Usuário não encontrado');
-      } else {
+      if (verificaUsuario) {
         res.status(200).send(verificaUsuario);
+      } else {
+        throw new Error('Usuário não encontrado');
       }
     } catch (error: any) {
-      console.log(error);
+      throw error;
     }
   }
 
   async validarToken(token: string) {
     try {
-      let tokenValido = await new UsuarioRepository().validarToken(token);
+      let tokenValido = await this.usuarioRepository.validarToken(token);
       return tokenValido;
     } catch (error: any) {
-      console.log(error);
+      throw error;
     }
   }
 }

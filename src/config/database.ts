@@ -1,7 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+// import { PrismaClient } from '@prisma/client';
 
-import { Client, Pool } from 'pg';
-export const prisma = new PrismaClient();
+import { Pool } from 'pg';
+// export const prisma = new PrismaClient();
 
 const client = new Pool({
   host: process.env.DB_HOST,
