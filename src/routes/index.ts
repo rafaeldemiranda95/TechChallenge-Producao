@@ -52,3 +52,11 @@ router.post(
   }
 );
 export default router;
+const router = express.Router();
+
+router.get('/', (req, res) => {
+  res.status(200).send('OK');
+});
+
+
+export default router;
