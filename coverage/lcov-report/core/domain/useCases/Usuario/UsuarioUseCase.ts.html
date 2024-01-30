@@ -111,30 +111,14 @@
 <a name='L46'></a><a href='#L46'>46</a>
 <a name='L47'></a><a href='#L47'>47</a>
 <a name='L48'></a><a href='#L48'>48</a>
-<a name='L49'></a><a href='#L49'>49</a>
-<a name='L50'></a><a href='#L50'>50</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L49'></a><a href='#L49'>49</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -148,7 +132,21 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -165,39 +163,38 @@
 import { Usuario } from '../../../domain/models/Usuario';
 &nbsp;
 export class UsuarioUseCase {
-  private usuarioRepository: UsuarioRepository;
+  usuarioRepository: UsuarioRepository;
 &nbsp;
   constructor(usuarioRepository: UsuarioRepository) {
     this.usuarioRepository = usuarioRepository;
   }
 &nbsp;
-  // Manter
   async autenticaAdministrador(usuario: Usuario, res: any) {
     try {
-      const usuarioAutenticado =
-        await this.usuarioRepository.autenticaAdministrador(usuario);
-      if (usuarioAutenticado) {
-        res.status(200).send('Usuário Autenticado');
+      let verificaUsuario = await this.usuarioRepository.autenticaAdministrador(
+        usuario
+      );
+      if (verificaUsuario == undefined) {
+        res.status(400).send('Usuário não encontrado');
       } else {
-        throw new Error('Usuário não encontrado');
+        res.status(200).send(verificaUsuario);
       }
-    } catch (error) {
-      // Aqui você pode tratar os erros conforme necessário
-      throw error;
+    } catch (error: any) {
+      throw new Error(error.message);
     }
   }
   async autenticaCliente(usuario: Usuario, res: any) {
     try {
-      const verificaUsuario = await this.usuarioRepository.autenticaCliente(
+      let verificaUsuario = await this.usuarioRepository.autenticaCliente(
         usuario
       );
-      if (verificaUsuario) {
-        res.status(200).send(verificaUsuario);
+      if (verificaUsuario == undefined) {
+        res.status(400).send('Usuário não encontrado');
       } else {
-        throw new Error('Usuário não encontrado');
+        res.status(200).send(verificaUsuario);
       }
     } catch (error: any) {
-      throw error;
+      throw new Error(error.message);
     }
   }
 &nbsp;
@@ -206,7 +203,7 @@ export class UsuarioUseCase {
       let tokenValido = await this.usuarioRepository.validarToken(token);
       return tokenValido;
     } catch (error: any) {
-      throw error;
+      throw new Error(error.message);
     }
   }
 }
@@ -217,7 +214,7 @@ export class UsuarioUseCase {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-28T00:55:47.866Z
+                at 2024-01-30T23:25:56.990Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

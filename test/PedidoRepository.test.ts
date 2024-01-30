@@ -1,7 +1,7 @@
-import { runQuery } from '../../../config/database';
-import { PedidoRepository } from './PedidoRepository';
+import { PedidoRepository } from '../src/adapter/driven/infra/PedidoRepository';
+import { runQuery } from '../src/config/database';
 
-jest.mock('../../../config/database', () => ({
+jest.mock('../src/config/database', () => ({
   runQuery: jest.fn(),
 }));
 
@@ -15,7 +15,7 @@ describe('PedidoRepository', () => {
 
   describe('listagemFilas', () => {
     it('deve retornar uma lista vazia quando não há filas', async () => {
-      require('../../../config/database').runQuery.mockResolvedValue([]);
+      require('../src/config/database').runQuery.mockResolvedValue([]);
       const resultado = await pedidoRepository.listagemFilas();
       expect(resultado).toEqual([]);
       expect(runQuery).toHaveBeenCalledWith(
@@ -28,10 +28,10 @@ describe('PedidoRepository', () => {
 
   describe('trocarStatusFila', () => {
     it('deve atualizar o status da fila e do pedido corretamente', async () => {
-      require('../../../config/database').runQuery.mockResolvedValueOnce([
+      require('../src/config/database').runQuery.mockResolvedValueOnce([
         { id: 1, status: 'novo status' },
       ]);
-      require('../../../config/database').runQuery.mockResolvedValueOnce([
+      require('../src/config/database').runQuery.mockResolvedValueOnce([
         { id: 1, status: 'novo status' },
       ]);
 
@@ -47,7 +47,7 @@ describe('PedidoRepository', () => {
 
     it('deve lançar um erro quando a consulta ao banco de dados falhar', async () => {
       const errorMock = new Error('Erro de consulta ao banco de dados');
-      require('../../../config/database').runQuery.mockRejectedValue(errorMock);
+      require('../src/config/database').runQuery.mockRejectedValue(errorMock);
 
       await expect(pedidoRepository.listagemFilas()).rejects.toThrow(errorMock);
 
@@ -60,7 +60,7 @@ describe('PedidoRepository', () => {
       const id = 1;
       const status = 'novo status';
       const errorMock = new Error('Erro de atualização da fila');
-      require('../../../config/database').runQuery.mockRejectedValueOnce(
+      require('../src/config/database').runQuery.mockRejectedValueOnce(
         errorMock
       );
 
@@ -75,11 +75,9 @@ describe('PedidoRepository', () => {
 
     it('deve lançar um erro quando a atualização do pedido falhar', async () => {
       const fila = { id: 1, status: 'novo status' };
-      require('../../../config/database').runQuery.mockResolvedValueOnce([
-        fila,
-      ]);
+      require('../src/config/database').runQuery.mockResolvedValueOnce([fila]);
       const errorMock = new Error('Erro de atualização do pedido');
-      require('../../../config/database').runQuery.mockRejectedValueOnce(
+      require('../src/config/database').runQuery.mockRejectedValueOnce(
         errorMock
       );
 
@@ -112,7 +110,7 @@ describe('PedidoRepository', () => {
       },
       produto: [], // Ajuste conforme necessário
     };
-    require('../../../config/database').runQuery.mockResolvedValue();
+    require('../src/config/database').runQuery.mockResolvedValue();
 
     await pedidoRepository.enviarParaFila(mockPedido);
 
@@ -134,7 +132,7 @@ describe('PedidoRepository', () => {
       produto: [], // Ajuste conforme necessário
     };
     const errorMock = new Error('Erro de inserção no banco de dados');
-    require('../../../config/database').runQuery.mockRejectedValue(errorMock);
+    require('../src/config/database').runQuery.mockRejectedValue(errorMock);
 
     await expect(pedidoRepository.enviarParaFila(mockPedido)).rejects.toThrow(
       errorMock
@@ -144,7 +142,7 @@ describe('PedidoRepository', () => {
 
   it('deve chamar runQuery com a query correta', async () => {
     const statusArray = ['recebido'];
-    require('../../../config/database').runQuery.mockResolvedValue([]);
+    require('../src/config/database').runQuery.mockResolvedValue([]);
 
     await pedidoRepository.listarPorStatus(statusArray);
 
@@ -156,7 +154,7 @@ describe('PedidoRepository', () => {
   it('deve lançar um erro se a consulta ao banco de dados falhar', async () => {
     const statusArray = ['recebido', 'pronto'];
     const errorMock = new Error('Erro de consulta ao banco de dados');
-    require('../../../config/database').runQuery.mockRejectedValue(errorMock);
+    require('../src/config/database').runQuery.mockRejectedValue(errorMock);
 
     await expect(pedidoRepository.listarPorStatus(statusArray)).rejects.toThrow(
       errorMock
@@ -172,13 +170,13 @@ describe('PedidoRepository', () => {
     const mockPedidoProduto = [{ pedidoid: 1, produtoid: 1 }];
     const mockProduto = [{ id: 1, nome: 'Produto 1' }];
 
-    require('../../../config/database').runQuery.mockResolvedValueOnce(
+    require('../src/config/database').runQuery.mockResolvedValueOnce(
       mockPedidos
     ); // Para query de pedidos
-    require('../../../config/database').runQuery.mockResolvedValueOnce(
+    require('../src/config/database').runQuery.mockResolvedValueOnce(
       mockPedidoProduto
     ); // Para query de pedidoProduto
-    require('../../../config/database').runQuery.mockResolvedValueOnce(
+    require('../src/config/database').runQuery.mockResolvedValueOnce(
       mockProduto
     ); // Para query de produto
 
@@ -207,7 +205,7 @@ describe('PedidoRepository', () => {
 
   it('deve lançar um erro se a consulta ao banco de dados falhar', async () => {
     const errorMock = new Error('Erro de consulta ao banco de dados');
-    require('../../../config/database').runQuery.mockRejectedValue(errorMock);
+    require('../src/config/database').runQuery.mockRejectedValue(errorMock);
 
     await expect(pedidoRepository.listar()).rejects.toThrow(errorMock);
   });

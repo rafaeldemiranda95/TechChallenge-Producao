@@ -1,8 +1,8 @@
 import { Response } from 'express';
-import { PedidoUseCase } from '../../core/domain/useCases/Pedido/PedidoUseCase';
-import { PedidoController } from './PedidoController';
+import { PedidoController } from '../src/adapter/driver/PedidoController';
+import { PedidoUseCase } from '../src/core/domain/useCases/Pedido/PedidoUseCase';
 
-jest.mock('../../core/domain/useCases/Pedido/PedidoUseCase');
+jest.mock('../src/core/domain/useCases/Pedido/PedidoUseCase');
 
 describe('PedidoController', () => {
   let pedidoController: PedidoController;

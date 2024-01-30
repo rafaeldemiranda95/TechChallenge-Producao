@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-import { runQuery } from './database';
+import { runQuery } from '../src/config/database';
 
 jest.mock('pg', () => {
   const mPool = {
@@ -35,6 +35,4 @@ describe('runQuery', () => {
     );
     expect(pool.connect).toHaveBeenCalled();
   });
-
-  // Outros testes conforme necessário
 });

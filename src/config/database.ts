@@ -1,7 +1,4 @@
-// import { PrismaClient } from '@prisma/client';
-
 import { Pool } from 'pg';
-// export const prisma = new PrismaClient();
 
 const client = new Pool({
   host: process.env.DB_HOST,
@@ -15,6 +12,5 @@ export const runQuery = async (query: string) => {
   await client.connect();
   const res = await client.query(query);
   let result = res;
-  //   await client.end();
   return result.rows;
 };

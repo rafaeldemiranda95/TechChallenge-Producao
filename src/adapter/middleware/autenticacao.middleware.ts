@@ -1,5 +1,5 @@
+import { NextFunction, Request, Response } from 'express';
 import { UsuarioUseCase } from '../../core/domain/useCases/Usuario/UsuarioUseCase';
-import { Request, Response, NextFunction } from 'express';
 
 export function autenticacaoMiddleware(usuarioUseCase: UsuarioUseCase) {
   return async function (req: Request, res: Response, next: NextFunction) {

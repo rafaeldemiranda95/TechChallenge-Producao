@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
-import { Usuario } from '../../../core/domain/models/Usuario';
-import { UsuarioRepository } from './UsuarioRepository';
+import { UsuarioRepository } from '../src/adapter/driven/infra/UsuarioRepository';
+import { Usuario } from '../src/core/domain/models/Usuario';
 
-jest.mock('../../../config/database');
+jest.mock('../src/config/database');
 jest.mock('jsonwebtoken', () => ({
   sign: jest.fn(),
 }));
@@ -17,7 +17,7 @@ describe('UsuarioRepository', () => {
 
   test('deve validar um token existente', async () => {
     const tokenMock = 'tokenValido';
-    require('./../../../config/database').runQuery.mockResolvedValue([
+    require('./../src/config/database').runQuery.mockResolvedValue([
       { id: 1, token: tokenMock },
     ]);
     const isValid = await usuarioRepository.validarToken(tokenMock);
@@ -26,7 +26,7 @@ describe('UsuarioRepository', () => {
 
   test('deve retornar false para um token inválido', async () => {
     const tokenMock = 'tokenInvalido';
-    require('./../../../config/database').runQuery.mockResolvedValue([]);
+    require('./../src/config/database').runQuery.mockResolvedValue([]);
     const isValid = await usuarioRepository.validarToken(tokenMock);
     expect(isValid).toBe(false);
   });
@@ -38,7 +38,7 @@ describe('UsuarioRepository', () => {
       senha: 'senha123',
       cpf: '123.456.789-00',
     };
-    require('./../../../config/database').runQuery.mockResolvedValueOnce([
+    require('./../src/config/database').runQuery.mockResolvedValueOnce([
       { id: 1, ...usuarioMock },
     ]);
 
@@ -53,7 +53,7 @@ describe('UsuarioRepository', () => {
       senha: 'senha123',
       cpf: '123.456.789-00',
     };
-    require('./../../../config/database').runQuery.mockResolvedValueOnce([
+    require('./../src/config/database').runQuery.mockResolvedValueOnce([
       { id: 1, ...usuarioMock },
     ]);
 

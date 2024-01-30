@@ -1,9 +1,9 @@
-import { PedidoRepository } from '../../../../adapter/driven/infra/PedidoRepository';
-import { ListagemPedidos } from '../../../domain/models/ListagemPedidos';
-import { Pedido } from '../../models/Pedido';
-import { PedidoUseCase } from './PedidoUseCase';
+import { PedidoRepository } from '../src/adapter/driven/infra/PedidoRepository';
+import { ListagemPedidos } from '../src/core/domain/models/ListagemPedidos';
+import { Pedido } from '../src/core/domain/models/Pedido';
+import { PedidoUseCase } from '../src/core/domain/useCases/Pedido/PedidoUseCase';
 
-jest.mock('../../../../adapter/driven/infra/PedidoRepository');
+jest.mock('../src/adapter/driven/infra/PedidoRepository');
 
 describe('PedidoUseCase', () => {
   let pedidoUseCase: PedidoUseCase;

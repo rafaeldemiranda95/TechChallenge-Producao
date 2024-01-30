@@ -18,16 +18,13 @@ export class PedidoRepository implements IPedidoUseCase {
     // em preparação
     // pronto
     // finalizado
-
     try {
       let filaQuery = `UPDATE public.fila SET status = '${status}' WHERE id = ${id} RETURNING *`;
       let _fila = await runQuery(filaQuery);
-      // console.log('_fila  ==>>  ', _fila);
       if (_fila.length > 0) {
         let fila = _fila[0];
         let pedidoQuery = `UPDATE public.pedido SET status = '${status}' WHERE id = ${fila.id} RETURNING *`;
         let pedido = await runQuery(pedidoQuery);
-        // console.log('pedido  ==>>  ', pedido);
       }
     } catch (error: any) {
       throw error;
@@ -47,14 +44,6 @@ export class PedidoRepository implements IPedidoUseCase {
     try {
       let query = `SELECT * FROM public.pedido where status = '${status}' order by updatedAt desc`;
       let listaPedidos = await runQuery(query);
-      // let listaPedidos = await prisma.pedido.findMany({
-      //   orderBy: {
-      //     updatedAt: 'desc',
-      //   },
-      //   where: {
-      //     status: { in: status },
-      //   },
-      // });
       return listaPedidos;
     } catch (error: any) {
       throw error;
@@ -68,7 +57,6 @@ export class PedidoRepository implements IPedidoUseCase {
       let pedidoProduto = await runQuery(query2);
       let pedidosObj: ListagemPedidos[] = [];
       let pedidosL = [...pedidos];
-      // console.log('pedidosL  ==>  ', pedidosL);
       for (let item of pedidosL) {
         if (item.status !== 'Finalizado') {
           let produtos: Array<any> = [];
@@ -99,9 +87,7 @@ export class PedidoRepository implements IPedidoUseCase {
         (el) => el.status.toUpperCase() == 'EM PREPARAÇÃO'
       );
       let returnPedidosObj = pronto.concat(emPreparação, recebido);
-      // console.log('returnPedidosObj  ==>  ', returnPedidosObj);
       return returnPedidosObj;
-      // return pedidosObj;
     } catch (error: any) {
       throw error;
     }

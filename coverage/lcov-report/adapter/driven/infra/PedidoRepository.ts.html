@@ -158,21 +158,7 @@
 <a name='L93'></a><a href='#L93'>93</a>
 <a name='L94'></a><a href='#L94'>94</a>
 <a name='L95'></a><a href='#L95'>95</a>
-<a name='L96'></a><a href='#L96'>96</a>
-<a name='L97'></a><a href='#L97'>97</a>
-<a name='L98'></a><a href='#L98'>98</a>
-<a name='L99'></a><a href='#L99'>99</a>
-<a name='L100'></a><a href='#L100'>100</a>
-<a name='L101'></a><a href='#L101'>101</a>
-<a name='L102'></a><a href='#L102'>102</a>
-<a name='L103'></a><a href='#L103'>103</a>
-<a name='L104'></a><a href='#L104'>104</a>
-<a name='L105'></a><a href='#L105'>105</a>
-<a name='L106'></a><a href='#L106'>106</a>
-<a name='L107'></a><a href='#L107'>107</a>
-<a name='L108'></a><a href='#L108'>108</a>
-<a name='L109'></a><a href='#L109'>109</a>
-<a name='L110'></a><a href='#L110'>110</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L96'></a><a href='#L96'>96</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -185,7 +171,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -196,12 +181,10 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
@@ -221,14 +204,6 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -242,7 +217,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -273,9 +247,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -301,16 +273,13 @@ export class PedidoRepository implements IPedidoUseCase {
     // em preparação
     // pronto
     // finalizado
-&nbsp;
     try {
       let filaQuery = `UPDATE public.fila SET status = '${status}' WHERE id = ${id} RETURNING *`;
       let _fila = await runQuery(filaQuery);
-      // console.log('_fila  ==&gt;&gt;  ', _fila);
       <span class="missing-if-branch" title="else path not taken" >E</span>if (_fila.length &gt; 0) {
         let fila = _fila[0];
         let pedidoQuery = `UPDATE public.pedido SET status = '${status}' WHERE id = ${fila.id} RETURNING *`;
         let pedido = await runQuery(pedidoQuery);
-        // console.log('pedido  ==&gt;&gt;  ', pedido);
       }
     } catch (error: any) {
       throw error;
@@ -330,14 +299,6 @@ export class PedidoRepository implements IPedidoUseCase {
     try {
       let query = `SELECT * FROM public.pedido where status = '${status}' order by updatedAt desc`;
       let listaPedidos = await runQuery(query);
-      // let listaPedidos = await prisma.pedido.findMany({
-      //   orderBy: {
-      //     updatedAt: 'desc',
-      //   },
-      //   where: {
-      //     status: { in: status },
-      //   },
-      // });
       return listaPedidos;
     } catch (error: any) {
       throw error;
@@ -351,7 +312,6 @@ export class PedidoRepository implements IPedidoUseCase {
       let pedidoProduto = await runQuery(query2);
       let pedidosObj: ListagemPedidos[] = [];
       let pedidosL = [...pedidos];
-      // console.log('pedidosL  ==&gt;  ', pedidosL);
       for (let item of pedidosL) {
         <span class="missing-if-branch" title="else path not taken" >E</span>if (item.status !== 'Finalizado') {
           let produtos: Array&lt;any&gt; = [];
@@ -382,9 +342,7 @@ export class PedidoRepository implements IPedidoUseCase {
         (el) =&gt; el.status.toUpperCase() == 'EM PREPARAÇÃO'
       );
       let returnPedidosObj = pronto.concat(emPreparação, recebido);
-      // console.log('returnPedidosObj  ==&gt;  ', returnPedidosObj);
       return returnPedidosObj;
-      // return pedidosObj;
     } catch (error: any) {
       throw error;
     }
@@ -397,7 +355,7 @@ export class PedidoRepository implements IPedidoUseCase {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-28T00:55:47.866Z
+                at 2024-01-30T23:25:56.990Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
