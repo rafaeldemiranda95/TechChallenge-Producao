@@ -37,7 +37,7 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@master
         with:
           args: >
-            -Dsonar.projectKey=rafaeldemiranda95_TechChallenge-Pedido
+            -Dsonar.projectKey=rafaeldemiranda95_TechChallenge-Producao
             -Dsonar.organization=rafaeldemiranda95
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
         env:
