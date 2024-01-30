@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1706657700385" clover="3.2.0">
-  <project timestamp="1706657700385" name="All files">
+<coverage generated="1706658104952" clover="3.2.0">
+  <project timestamp="1706658104952" name="All files">
     <metrics statements="163" coveredstatements="158" conditionals="38" coveredconditionals="25" methods="41" coveredmethods="41" elements="242" coveredelements="224" complexity="0" loc="163" ncloc="163" packages="8" files="12" classes="12"/>
     <package name="adapter.driven.infra">
       <metrics statements="79" coveredstatements="76" conditionals="26" coveredconditionals="15" methods="11" coveredmethods="11"/>
