@@ -1,5 +1,3 @@
-import { Produto } from './Produto';
-
 export class ListagemPedidos {
   id: number;
   usuarioId: number;
