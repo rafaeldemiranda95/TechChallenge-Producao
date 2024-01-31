@@ -7,7 +7,6 @@ export class PedidoRepository implements IPedidoUseCase {
     try {
       let query = `SELECT * FROM public.fila ORDER BY id ASC`;
       let listaFila = await runQuery(query);
-      // let listaFila = await prisma.fila.findMany();
       return listaFila;
     } catch (error: any) {
       throw error;

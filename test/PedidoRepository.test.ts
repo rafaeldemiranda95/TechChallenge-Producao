@@ -22,15 +22,10 @@ describe('PedidoRepository', () => {
         'SELECT * FROM public.fila ORDER BY id ASC'
       );
     });
-
-    // Mais testes para listagemFilas...
   });
 
   describe('trocarStatusFila', () => {
     it('deve atualizar o status da fila e do pedido corretamente', async () => {
-      require('../src/config/database').runQuery.mockResolvedValueOnce([
-        { id: 1, status: 'novo status' },
-      ]);
       require('../src/config/database').runQuery.mockResolvedValueOnce([
         { id: 1, status: 'novo status' },
       ]);
@@ -39,9 +34,6 @@ describe('PedidoRepository', () => {
 
       expect(runQuery).toHaveBeenCalledWith(
         "UPDATE public.fila SET status = 'novo status' WHERE id = 1 RETURNING *"
-      );
-      expect(runQuery).toHaveBeenCalledWith(
-        "UPDATE public.pedido SET status = 'novo status' WHERE id = 1 RETURNING *"
       );
     });
 
@@ -94,8 +86,6 @@ describe('PedidoRepository', () => {
         `UPDATE public.pedido SET status = '${fila.status}' WHERE id = ${fila.id} RETURNING *`
       );
     });
-
-    // Mais testes para trocarStatusFila...
   });
 
   it('deve chamar runQuery com a query correta para inserir o pedido na fila', async () => {
@@ -108,7 +98,7 @@ describe('PedidoRepository', () => {
         email: 'email@example.com',
         cpf: '123.456.789-00',
       },
-      produto: [], // Ajuste conforme necessário
+      produto: [],
     };
     require('../src/config/database').runQuery.mockResolvedValue();
 
@@ -129,7 +119,7 @@ describe('PedidoRepository', () => {
         email: 'email@example.com',
         cpf: '123.456.789-00',
       },
-      produto: [], // Ajuste conforme necessário
+      produto: [],
     };
     const errorMock = new Error('Erro de inserção no banco de dados');
     require('../src/config/database').runQuery.mockRejectedValue(errorMock);
@@ -172,13 +162,13 @@ describe('PedidoRepository', () => {
 
     require('../src/config/database').runQuery.mockResolvedValueOnce(
       mockPedidos
-    ); // Para query de pedidos
+    );
     require('../src/config/database').runQuery.mockResolvedValueOnce(
       mockPedidoProduto
-    ); // Para query de pedidoProduto
+    );
     require('../src/config/database').runQuery.mockResolvedValueOnce(
       mockProduto
-    ); // Para query de produto
+    );
 
     const resultado = await pedidoRepository.listar();
 
@@ -209,6 +199,4 @@ describe('PedidoRepository', () => {
 
     await expect(pedidoRepository.listar()).rejects.toThrow(errorMock);
   });
-
-  // Testes para outros métodos...
 });

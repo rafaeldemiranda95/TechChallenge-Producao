@@ -74,7 +74,7 @@ export class UsuarioRepository implements IUsuarioUseCase {
         return token;
       }
     } catch (error: any) {
-      throw new Error(error);
+      throw error;
     }
   }
 }
